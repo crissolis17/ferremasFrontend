@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b7SmgeTI/Tw=",
+  "dgSpecHash": "ahay+uPE1rQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Cristian\\Desktop\\Ferremas\\backend\\FerremasBackend.csproj",
+  "projectFilePath": "C:\\Users\\Cristian\\Documents\\GitHub\\ferremasFrontend\\backend\\FerremasBackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Cristian\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Cristian\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

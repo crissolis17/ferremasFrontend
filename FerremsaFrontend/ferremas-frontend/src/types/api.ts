@@ -27,17 +27,20 @@ newPassword?: string;
 export interface UsuarioResponseDTO {
 id: number;
 nombre: string;
+apellido?: string;
 email: string;
+rut?: string;
 rol: RolUsuario;
 activo: boolean;
 fechaRegistro?: Date;
 }
 
 export interface AuthResponse {
-success: boolean;
-message?: string;
+exito: boolean;
+mensaje?: string;
 token?: string;
 usuario?: UsuarioResponseDTO;
+fechaHora?: Date;
 }
 
 // ========================================
@@ -101,6 +104,54 @@ cantidad: number;
 precioUnitario: number;
 subtotal: number;
 observaciones?: string;
+}
+
+// ========================================
+// TIPOS DE CLIENTES
+// ========================================
+
+export interface DireccionDTO {
+  id: number;
+  calle: string;
+  numero: string;
+  departamento: string;
+  comuna: string;
+  region: string;
+  codigoPostal: string;
+  esPrincipal: boolean;
+  fechaModificacion?: Date;
+}
+
+export interface ClienteResponseDTO {
+  id: number;
+  nombre: string;
+  apellido: string;
+  rut: string;
+  correoElectronico: string;
+  telefono?: string;
+  fechaCreacion: Date;
+  fechaModificacion?: Date;
+  activo: boolean;
+  usuarioId?: number;
+  direcciones?: DireccionDTO[];
+}
+
+export interface ClienteCreateDTO {
+  nombre: string;
+  apellido: string;
+  rut: string;
+  correoElectronico: string;
+  telefono?: string;
+  direcciones: Omit<DireccionDTO, 'id' | 'fechaModificacion'>[];
+}
+
+export interface ClienteUpdateDTO {
+  nombre?: string;
+  apellido?: string;
+  rut?: string;
+  correoElectronico?: string;
+  telefono?: string;
+  direcciones?: DireccionDTO[];
 }
 
 // ========================================
@@ -274,10 +325,91 @@ export interface ReporteInventario {
   productosBajoStock: Producto[];
 }
 
-export interface FacturaResponseDTO {
+// ========================================
+// TIPOS DE CARRITO
+// ========================================
+
+export interface CarritoItemDTO {
   id: number;
+  productoId: number;
+  productoNombre: string;
+  productoPrecio: number;
+  productoImagen?: string;
+  cantidad: number;
+  subtotal: number;
+  fechaAgregado: Date;
+}
+
+export interface AgregarAlCarritoDTO {
+  productoId: number;
+  cantidad: number;
+}
+
+export interface ActualizarCantidadDTO {
+  cantidad: number;
+}
+
+export interface CarritoResumenDTO {
+  totalItems: number;
+  subtotal: number;
+  total: number;
+  cantidadProductos: number;
+}
+
+// ========================================
+// TIPOS DE CHECKOUT
+// ========================================
+
+export interface CheckoutRequestDTO {
+  clienteId: number;
+  direccionId: number;
+  metodoPago: string;
+  observaciones?: string;
+  codigoDescuento?: string;
+}
+
+export interface CheckoutResponseDTO {
   pedidoId: number;
-  fechaEmision: string;
-  montoTotal: number;
-  anulada: boolean;
+  numeroPedido: string;
+  total: number;
+  estado: string;
+  fechaCreacion: Date;
+  urlPago?: string;
+  codigoPago?: string;
+}
+
+export interface CheckoutResumenDTO {
+  items: CarritoItemDTO[];
+  subtotal: number;
+  descuento: number;
+  impuestos: number;
+  envio: number;
+  total: number;
+  totalItems: number;
+  cliente: ClienteResumenDTO;
+  direccionEnvio: DireccionDTO;
+}
+
+export interface ClienteResumenDTO {
+  id: number;
+  nombre: string;
+  apellido: string;
+  rut: string;
+  email: string;
+  telefono?: string;
+}
+
+export interface ProcesarPagoRequestDTO {
+  pedidoId: number;
+  metodoPago: string;
+  tokenPago?: string;
+  payerId?: string;
+}
+
+export interface ProcesarPagoResponseDTO {
+  exito: boolean;
+  mensaje: string;
+  urlPago?: string;
+  codigoPago?: string;
+  estadoPago: string;
 }

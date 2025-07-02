@@ -1,5 +1,5 @@
 // src/services/auth.ts - Servicio de autenticación corregido
-import { apiService } from './api';
+import axios from 'axios';
 import type { 
   LoginDTO, 
   AuthResponse, 
@@ -7,7 +7,12 @@ import type {
   ResetPasswordDTO,
   UsuarioResponseDTO 
 } from '../types/api';
-import { AUTH_ENDPOINTS, STORAGE_KEYS, USER_ROLES } from '../constants/api';
+import { API_BASE_URL, AUTH_ENDPOINTS, STORAGE_KEYS, USER_ROLES } from '../constants/api';
+
+// Creamos un cliente axios específico para auth que no tendrá interceptores conflictivos
+const authApiClient = axios.create({
+    baseURL: API_BASE_URL,
+});
 
 // Servicio de autenticación que conecta directamente con tu AuthController
 class AuthService {
@@ -16,19 +21,24 @@ class AuthService {
     try {
       console.log('🔐 Iniciando sesión para:', credentials.email);
       
-      // Llamar a tu endpoint de login del backend
-      const response = await apiService.post<AuthResponse>(
+      // Usamos el cliente de auth específico
+      const response = await authApiClient.post<AuthResponse>(
         AUTH_ENDPOINTS.LOGIN,
         credentials
       );
 
+      console.log('📥 Respuesta del backend:', response.data);
+      console.log('📥 Tipo de respuesta:', typeof response.data);
+      console.log('📥 response.exito:', response.data.exito);
+      console.log('📥 response.mensaje:', response.data.mensaje);
+
       // Si el login es exitoso, guardar el token y la información del usuario
-      if (response.success && response.token) {
-        this.handleSuccessfulLogin(response);
+      if (response.data.exito && response.data.token) {
+        this.handleSuccessfulLogin(response.data);
         console.log('✅ Login exitoso para:', credentials.email);
       }
 
-      return response;
+      return response.data;
     } catch (error) {
       console.error('❌ Error en login:', error);
       throw this.handleAuthError(error);
@@ -40,17 +50,17 @@ class AuthService {
     try {
       console.log('👤 Registrando nuevo usuario:', userData.email);
       
-      const response = await apiService.post<AuthResponse>(
+      const response = await authApiClient.post<AuthResponse>(
         AUTH_ENDPOINTS.REGISTER,
         userData
       );
 
       // Si el registro incluye auto-login, manejar el token
-      if (response.success && response.token) {
-        this.handleSuccessfulLogin(response);
+      if (response.data.exito && response.data.token) {
+        this.handleSuccessfulLogin(response.data);
       }
 
-      return response;
+      return response.data;
     } catch (error) {
       console.error('❌ Error en registro:', error);
       throw this.handleAuthError(error);
@@ -62,12 +72,12 @@ class AuthService {
     try {
       console.log('🔄 Solicitando reset de contraseña para:', resetData.email);
       
-      const response = await apiService.post<AuthResponse>(
+      const response = await authApiClient.post<AuthResponse>(
         AUTH_ENDPOINTS.RESET_PASSWORD,
         resetData
       );
 
-      return response;
+      return response.data;
     } catch (error) {
       console.error('❌ Error en reset de contraseña:', error);
       throw this.handleAuthError(error);
@@ -82,9 +92,6 @@ class AuthService {
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
     localStorage.removeItem(STORAGE_KEYS.USER_DATA);
     localStorage.removeItem(STORAGE_KEYS.USER_ROLE);
-    
-    // Limpiar el token de la instancia de API
-    apiService.clearAuthToken();
     
     console.log('✅ Sesión cerrada exitosamente');
   }
@@ -146,10 +153,9 @@ class AuthService {
   // Métodos privados para manejo interno
 
   private handleSuccessfulLogin(response: AuthResponse): void {
-    // Guardar token en localStorage y configurarlo en el cliente API
+    // Guardar token en localStorage
     if (response.token) {
       localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, response.token);
-      apiService.setAuthToken(response.token);
     }
 
     // Guardar información del usuario

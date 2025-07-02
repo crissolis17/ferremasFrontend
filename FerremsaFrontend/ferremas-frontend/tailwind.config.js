@@ -7,66 +7,53 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Colores personalizados para Ferremas
-        ferremas: {
-          primary: '#2D3142',     // Gris oscuro elegante
-          secondary: '#E8A44B',   // Naranja cálido
-          accent: '#D8973C',      // Naranja más oscuro
-          success: '#4F9D69',     // Verde sobrio
-          warning: '#E8A44B',     // Naranja para advertencias
-          danger: '#D64045',      // Rojo sobrio
-          background: '#F7F7F7',  // Fondo claro
-          surface: '#FFFFFF',     // Superficie
-          orange: {
-            50: '#FFF7ED',
-            100: '#FFEDD5',
-            200: '#FED7AA',
-            300: '#FDBA74',
-            400: '#FB923C',
-            500: '#E8A44B',
-            600: '#D8973C',
-            700: '#C2821F',
-            800: '#9A6617',
-            900: '#7C4F11',
-          },
-          green: {
-            50: '#F0FDF4',
-            100: '#DCFCE7',
-            200: '#BBF7D0',
-            300: '#86EFAC',
-            400: '#4ADE80',
-            500: '#4F9D69',
-            600: '#3B8255',
-            700: '#2C6A42',
-            800: '#1F4D31',
-            900: '#143321',
-          },
-          gray: {
-            50: '#F7F7F7',
-            100: '#E1E1E1',
-            200: '#CFCFCF',
-            300: '#B1B1B1',
-            400: '#9E9E9E',
-            500: '#7E7E7E',
-            600: '#626262',
-            700: '#515151',
-            800: '#3B3B3B',
-            900: '#222222',
-          }
-        }
+        primary: '#2563eb', // Azul eléctrico
+        secondary: '#ec4899', // Fucsia vibrante
+        accent: '#facc15', // Amarillo brillante
+        success: '#22d3ee', // Verde lima
+        background: '#f9fafb', // Gris muy claro
+        surface: '#ffffff', // Blanco
+        text: '#1e293b', // Gris oscuro
+        'text-secondary': '#64748b', // Gris medio
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'custom': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'elevated': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-        'glow': '0 0 15px rgba(232, 164, 75, 0.3)',
+        'vibrant': '0 4px 24px 0 rgba(37,99,235,0.10), 0 1.5px 6px 0 rgba(236,72,153,0.10)',
+        'vibrant-hover': '0 8px 32px 0 rgba(37,99,235,0.18), 0 3px 12px 0 rgba(236,72,153,0.18)',
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-pattern': 'linear-gradient(45deg, var(--tw-gradient-stops))',
-      }
+        'gradient-navbar': 'linear-gradient(90deg, #2563eb 0%, #ec4899 100%)',
+        'gradient-btn': 'linear-gradient(90deg, #2563eb 0%, #ec4899 100%)',
+        'gradient-banner': 'linear-gradient(90deg, #2563eb 0%, #facc15 100%)',
+      },
+      borderRadius: {
+        'xl': '1.25rem',
+        '2xl': '1.5rem',
+        '3xl': '2rem',
+      },
+      transitionProperty: {
+        'colors': 'color, background-color, border-color, text-decoration-color, fill, stroke',
+        'spacing': 'margin, padding',
+      },
+      zIndex: {
+        '60': '60',
+        '70': '70',
+        '80': '80',
+        '90': '90',
+        '100': '100',
+      },
+      fontSize: {
+        '2xs': ['0.625rem', { lineHeight: '0.75rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        '5xl': ['3rem', { lineHeight: '1' }],
+        '6xl': ['3.75rem', { lineHeight: '1' }],
+        '7xl': ['4.5rem', { lineHeight: '1' }],
+        '8xl': ['6rem', { lineHeight: '1' }],
+        '9xl': ['8rem', { lineHeight: '1' }],
+      },
     },
   },
   plugins: [],
