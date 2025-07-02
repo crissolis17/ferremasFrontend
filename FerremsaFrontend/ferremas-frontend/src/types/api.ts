@@ -273,3 +273,11 @@ export interface ReporteInventario {
   productosAgotados: number;
   productosBajoStock: Producto[];
 }
+
+export interface FacturaResponseDTO {
+  id: number;
+  pedidoId: number;
+  fechaEmision: string;
+  montoTotal: number;
+  anulada: boolean;
+}
