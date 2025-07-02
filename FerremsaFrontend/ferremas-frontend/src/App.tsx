@@ -6,6 +6,7 @@ import type { LoginDTO, UsuarioResponseDTO } from './types/api'
 import VendedorView from './views/VendedorView'
 import BodegueroView from './views/BodegueroView'
 import AdminView from './views/AdminView'
+import ClienteView from './views/ClienteView'
 import './App.css'
 
 // Componente LoginForm separado y memo-izado
@@ -168,6 +169,9 @@ function App() {
         return <BodegueroView />
       case RolUsuario.ADMIN:
         return <AdminView />
+      case 'cliente':
+      case RolUsuario.CLIENTE:
+        return <ClienteView />
       default:
         return (
           <div className="p-6">

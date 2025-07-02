@@ -180,6 +180,23 @@ class ApiService {
       throw error;
     }
   }
+
+  async updateUsuario(id: number, data: { nombre: string; email: string; password?: string }) {
+    const response = await this.client.put(`/usuarios/${id}`, data);
+    return response.data;
+  }
+
+  async descargarComprobanteFactura(facturaId: number) {
+    const response = await this.client.get(`/facturas/${facturaId}/comprobante`, {
+      responseType: 'blob'
+    });
+    return response.data;
+  }
+
+  async getFacturas() {
+    const response = await this.client.get('/facturas');
+    return response.data;
+  }
 }
 
 // Exportar una instancia única del servicio (patrón Singleton)
